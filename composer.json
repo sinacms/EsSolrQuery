@@ -1,0 +1,13 @@
+{
+    "name": "sinacms/es-solr-query",
+    "description": "query parser for es or solar",
+    "type": "library",
+    "license": "GPL-2",
+    "authors": [
+        {
+            "name": "吴强健",
+            "email": "qiangjian@staff.sina.com.cn"
+        }
+    ],
+    "require": {}
+}
