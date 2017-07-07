@@ -9,5 +9,8 @@
             "email": "qiangjian@staff.sina.com.cn"
         }
     ],
-    "require": {}
+    "require": {},
+    "autoload": {
+        "psr-4": { "EsSolrQuery\\": "src" }
+    },
 }
