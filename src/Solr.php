@@ -2,12 +2,33 @@
 namespace EsSolrQuery;
 
 class Solr implements Query {
-	public static function _and($exprs) {
+	public static function _not_exists($fieldname) {
+		return '-('.$fieldname.':*)';
+	}
+	public static function _exists($fieldname) {
+		return '('.$fieldname.':*)';
+	}
+
+    /**
+     * @param $fieldname
+     * @return string
+     */
+	public static function _not_empty($fieldname) {
+		return $fieldname.':["" TO *]';
+	}
+    /**
+     * @param $fieldname
+     * @return string
+     */
+	public static function _empty($fieldname) {
+		return '-'.self::_not_empty($fieldname);
+	}
+	public static function _and(array $exprs) {
 		$expr = implode(' AND ', $exprs);
 		return '('.$expr.')';
 	}
 
-	public static function _or($exprs) {
+	public static function _or(array $exprs) {
 		$expr = implode(' OR ', $exprs);
 		return '('.$expr.')';
 	}
@@ -40,7 +61,7 @@ class Solr implements Query {
 		return $fieldname.':'.$value;
 	}
 
-	public static function _in($fieldname, $values) {
+	public static function _in($fieldname, array $values) {
 		$exprs = array();
 		foreach ($values as $value) {
 			$exprs[] = $fieldname.':'.$value;

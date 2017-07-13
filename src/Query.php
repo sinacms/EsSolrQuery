@@ -6,9 +6,9 @@ namespace EsSolrQuery;
 
 interface Query {
 
-	public static function _and($exprs);
+	public static function _and(array $exprs);
 
-	public static function _or($exprs);
+	public static function _or(array $exprs);
 
 	public static function _not($expr);
 
@@ -24,6 +24,6 @@ interface Query {
 
 	public static function _match($fieldname, $value);
 
-	public static function _in($fieldname, $values);
+	public static function _in($fieldname, array $values);
 
 }
