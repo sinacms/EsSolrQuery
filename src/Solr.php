@@ -2,6 +2,9 @@
 namespace EsSolrQuery;
 
 class Solr implements Query {
+    public static function value($vaule){
+        return $vaule < 0 ? '"'.$vaule.'"' : $vaule;
+    }
 	public static function _not_exists($fieldname) {
 		return '-('.$fieldname.':*)';
 	}
@@ -24,12 +27,14 @@ class Solr implements Query {
 		return '-'.self::_not_empty($fieldname);
 	}
 	public static function _and(array $exprs) {
+	    if(sizeof($exprs) == 0) return '';
 		$expr = implode(' AND ', $exprs);
 		return '('.$expr.')';
 	}
 
 	public static function _or(array $exprs) {
-		$expr = implode(' OR ', $exprs);
+        if(sizeof($exprs) == 0) return '';
+        $expr = implode(' OR ', $exprs);
 		return '('.$expr.')';
 	}
 
@@ -38,33 +43,33 @@ class Solr implements Query {
 	}
 
 	public static function _eq($fieldname, $value) {
-		return $fieldname.':'.$value;
+		return $fieldname.':'.self::value($value);
 	}
 
 	public static function _gt($fieldname, $value) {
-		return $fieldname.':{'.$value.' TO *}';
+		return $fieldname.':{'.self::value($value).' TO *}';
 	}
 
 	public static function _lt($fieldname, $value) {
-		return $fieldname.':{* TO '.$value.'}';
+		return $fieldname.':{* TO '.self::value($value).'}';
 	}
 
 	public static function _gteq($fieldname, $value) {
-		return $fieldname.':['.$value.' TO *]';
+		return $fieldname.':['.self::value($value).' TO *]';
 	}
 
 	public static function _lteq($fieldname, $value) {
-		return $fieldname.':[* TO '.$value.']';
+		return $fieldname.':[* TO '.self::value($value).']';
 	}
 
 	public static function _match($fieldname, $value) {
-		return $fieldname.':'.$value;
+		return $fieldname.':'.self::value($value);
 	}
 
 	public static function _in($fieldname, array $values) {
-		$exprs = array();
+        $exprs = array();
 		foreach ($values as $value) {
-			$exprs[] = $fieldname.':'.$value;
+			$exprs[] = $fieldname.':'.self::value($value);
 		}
 		$expr = implode(' OR ', $exprs);
 		return '('.$expr.')';
