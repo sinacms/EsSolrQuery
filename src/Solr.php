@@ -3,7 +3,7 @@ namespace EsSolrQuery;
 
 class Solr implements Query {
     public static function value($vaule){
-        return $vaule < 0 ? '"'.$vaule.'"' : $vaule;
+        return (is_string($vaule) || $vaule < 0 ) ? '"'.$vaule.'"' : $vaule;
     }
 	public static function _not_exists($fieldname) {
 		return '-('.$fieldname.':*)';
