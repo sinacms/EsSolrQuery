@@ -2,8 +2,8 @@
 namespace EsSolrQuery;
 
 class Solr implements Query {
-    public static function value($vaule){
-        return (is_string($vaule) || $vaule < 0 ) ? '"'.$vaule.'"' : $vaule;
+    public static function value($value){
+        return (is_string($value) || $value < 0 ) ? '"'.$value.'"' : $value;
     }
 	public static function _not_exists($fieldname) {
 		return '-('.$fieldname.':*)';
